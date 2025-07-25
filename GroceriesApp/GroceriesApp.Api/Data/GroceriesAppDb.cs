@@ -11,5 +11,6 @@ namespace GroceriesApp.Api
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Inventory> Inventory { get; set; }
         public DbSet<IngredientPrice> Prices { get; set; }
+        public DbSet<InventoryLog> InventoryLog { get; set; }
     }
 }

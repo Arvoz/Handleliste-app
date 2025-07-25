@@ -11,6 +11,7 @@ namespace GroceriesApp.Shared
         public int Id { get; set; }
         public int IngredientId { get; set; }
         public Ingredient Ingredient { get; set; }
+        public PriceCurrency Currency { get; set; }
         public decimal Price { get; set; }
     }
 }
