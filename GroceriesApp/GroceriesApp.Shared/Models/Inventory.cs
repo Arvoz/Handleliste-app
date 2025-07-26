@@ -9,12 +9,9 @@ namespace GroceriesApp.Shared
     public class Inventory
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public AppUser User { get; set; }
-        public int IngredientId { get; set; }
-        public Ingredient Ingredient { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime ExpiredDate { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public ICollection<UserInventory> UserInventories { get; set; } = new List<UserInventory>();
+        public ICollection<InventoryItem> InventoryItems { get; set; } = new List<InventoryItem>();
+        public ICollection<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
     }
 }

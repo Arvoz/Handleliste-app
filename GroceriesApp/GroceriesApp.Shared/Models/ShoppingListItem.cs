@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace GroceriesApp.Shared
 {
-    public class IngredientPrice
+    public class ShoppingListItem
     {
         public int Id { get; set; }
         public int IngredientId { get; set; }
         public Ingredient Ingredient { get; set; } = new Ingredient();
-        public PriceCurrency Currency { get; set; }
-        public decimal Price { get; set; }
+        public int ShoppingListId { get; set; }
+        public ShoppingList ShoppingList { get; set; } = new ShoppingList();
+        public decimal Amount { get; set; }
+        public bool ItemChecked { get; set; }
     }
 }
