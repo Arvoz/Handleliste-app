@@ -10,7 +10,7 @@ namespace GroceriesApp.Shared
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
+        public IngredientCategory Category { get; set; }
         public IngredientUnitType UnitType { get; set; }
         public decimal DefaultAmount { get; set; }
         public ICollection<IngredientPrice> IngredientPrices { get; set; } = new List<IngredientPrice>();
