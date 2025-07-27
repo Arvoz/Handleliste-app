@@ -5,7 +5,7 @@ namespace GroceriesApp.Api
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly GroceriesAppDb _db;
+        protected readonly GroceriesAppDb _db;
         private readonly DbSet<T> _table;
 
         public Repository(GroceriesAppDb db)
@@ -14,7 +14,7 @@ namespace GroceriesApp.Api
             _table = _db.Set<T>();
         }
 
-        public async Task AddAsync(T entity)
+        public virtual async Task AddAsync(T entity)
         {
             await _table.AddAsync(entity);
             await _db.SaveChangesAsync();

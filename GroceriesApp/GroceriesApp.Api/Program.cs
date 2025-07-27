@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 builder.Services.AddDbContext<GroceriesAppDb>(options =>
     options.UseSqlite("Data Source=app.db"));
 
