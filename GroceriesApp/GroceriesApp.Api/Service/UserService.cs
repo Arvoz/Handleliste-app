@@ -27,5 +27,12 @@ namespace GroceriesApp.Api
             user.Salt = salt;
             await base.AddAsync(user);
         }
+
+        public async Task<AppUser?> GetUserByNameAsync(string username)
+        {
+            var user = _db.Users.FirstOrDefault(u => u.Username == username);
+
+            return user;
+        }
     }
 }
