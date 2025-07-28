@@ -1,7 +1,9 @@
 ﻿using GroceriesApp.Api.Interface;
 using GroceriesApp.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GroceriesApp.Api.Controllers
 {
@@ -21,12 +23,10 @@ namespace GroceriesApp.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            var user = await _userService.ValidateCredentialsAsync(loginDto.Username, loginDto.Password);
+            var appUser = await _userService.ValidateCredentialsAsync(loginDto.Username, loginDto.Password);
 
-            if (!user)
-                return Unauthorized("hehehe");
-
-            var appUser = await _userService.GetUserByNameAsync(loginDto.Username);
+            if (appUser is null)
+                return Unauthorized("Password or Username is wrong!");
 
             var token = _token.GenerateToken(appUser);
 
@@ -36,23 +36,19 @@ namespace GroceriesApp.Api.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(LoginDto loginDto)
         {
-            if (await _userService.GetUserByNameAsync(loginDto.Username) is null)
-            {
-                var user = new AppUser
-                {
-                    Username = loginDto.Username,
-                    Password = loginDto.Password,
-                    Role = UserRole.User,
-                    Created = DateTime.UtcNow
-                };
+            var validate = await _userService.CreateNewUser(loginDto);
 
-                await _userService.AddAsync(user);
-                return Ok();
-            }
+            if (!validate) return BadRequest("Username allready exist!");
 
-            return BadRequest();
+            return Ok("Sucess!");
+        }
 
-            
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Test()
+        {
+            var user = User.FindFirst(ClaimTypes.Name)?.Value;
+            return Ok(user);
         }
     }
 }

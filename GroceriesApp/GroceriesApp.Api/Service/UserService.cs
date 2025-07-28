@@ -1,4 +1,5 @@
 ﻿using GroceriesApp.Shared;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace GroceriesApp.Api
@@ -12,13 +13,14 @@ namespace GroceriesApp.Api
             _crypto = crypto;
         }
 
-        public async Task<bool> ValidateCredentialsAsync(string username, string password)
+        public async Task<AppUser?> ValidateCredentialsAsync(string username, string password)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
-            if (user == null) return false;
+            if (user == null || !_crypto.VerifyPassword(password, user.Password, user.Salt)) 
+                return null;
 
-            return _crypto.VerifyPassword(password, user.Password, user.Salt);
+            return user;
         }
 
         public override async Task AddAsync(AppUser user)
@@ -28,11 +30,38 @@ namespace GroceriesApp.Api
             await base.AddAsync(user);
         }
 
-        public async Task<AppUser?> GetUserByNameAsync(string username)
+        public async Task<AppUser> GetUserByNameAsync(string username)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
+            if (user is null) return null;
+
             return user;
         }
+
+        public async Task<bool> CreateNewUser(LoginDto dto)
+        {
+            var exist = await _db.Users.AnyAsync(u => u.Username == dto.Username);
+            if (exist) return false;
+
+            var user = CreateUserFromDto(dto);
+            await AddAsync(user);
+            return true;
+        }
+
+        private AppUser CreateUserFromDto(LoginDto dto)
+        {
+            var user = new AppUser
+            {
+                Username = dto.Username,
+                Password = dto.Password,
+                Role = UserRole.User,
+                Created = DateTime.UtcNow
+            };
+
+            return user;
+        }
+
+        
     }
 }
