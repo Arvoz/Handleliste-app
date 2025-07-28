@@ -18,10 +18,10 @@ namespace GroceriesApp.Api
 
         public string GenerateToken(AppUser user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["jwt:Key"]!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("jwt:Key")!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
@@ -29,8 +29,8 @@ namespace GroceriesApp.Api
             };
 
             var token = new JwtSecurityToken(
-                issuer: _config["jwt:Issuer"],
-                audience: _config["jwt:Audience"],
+                issuer: _config.GetValue<string>("jwt:Issuer"),
+                audience: _config.GetValue<string>("jwt:Audience"),
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(2),
                 signingCredentials: creds

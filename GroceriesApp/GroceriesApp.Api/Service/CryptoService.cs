@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GroceriesApp.Api
 {
-    public class CryptoService
+    public class CryptoService : ICryptoService
     {
         public string HashPassword(string password, out string salt)
         {

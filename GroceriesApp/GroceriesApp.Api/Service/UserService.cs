@@ -5,9 +5,9 @@ namespace GroceriesApp.Api
 {
     public class UserService : Repository<AppUser>, IUserService
     {
-        private readonly CryptoService _crypto;
+        private readonly ICryptoService _crypto;
 
-        public UserService(GroceriesAppDb db, CryptoService crypto) : base(db)
+        public UserService(GroceriesAppDb db, ICryptoService crypto) : base(db)
         {
             _crypto = crypto;
         }
@@ -30,7 +30,7 @@ namespace GroceriesApp.Api
 
         public async Task<AppUser?> GetUserByNameAsync(string username)
         {
-            var user = _db.Users.FirstOrDefault(u => u.Username == username);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
             return user;
         }

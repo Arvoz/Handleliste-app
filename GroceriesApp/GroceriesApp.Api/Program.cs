@@ -14,14 +14,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Interfaces
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICryptoService, CryptoService>();
 
+// Shared interface
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+// DbContext
 builder.Services.AddDbContext<GroceriesAppDb>(options =>
     options.UseSqlite("Data Source=app.db"));
 
+// Token
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -30,10 +35,11 @@ builder.Services.AddAuthentication("Bearer")
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
             ValidIssuer = builder.Configuration["jwt:Issuer"],
             ValidAudience = builder.Configuration["jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["jwt:Key"]))
+                Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("jwt:Key")!))
         };
     });
 

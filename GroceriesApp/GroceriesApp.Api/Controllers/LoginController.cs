@@ -24,13 +24,35 @@ namespace GroceriesApp.Api.Controllers
             var user = await _userService.ValidateCredentialsAsync(loginDto.Username, loginDto.Password);
 
             if (!user)
-                return Unauthorized();
+                return Unauthorized("hehehe");
 
             var appUser = await _userService.GetUserByNameAsync(loginDto.Username);
 
             var token = _token.GenerateToken(appUser);
 
-            return Ok(new { token });
+            return Ok(token);
+        }
+
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(LoginDto loginDto)
+        {
+            if (await _userService.GetUserByNameAsync(loginDto.Username) is null)
+            {
+                var user = new AppUser
+                {
+                    Username = loginDto.Username,
+                    Password = loginDto.Password,
+                    Role = UserRole.User,
+                    Created = DateTime.UtcNow
+                };
+
+                await _userService.AddAsync(user);
+                return Ok();
+            }
+
+            return BadRequest();
+
+            
         }
     }
 }
