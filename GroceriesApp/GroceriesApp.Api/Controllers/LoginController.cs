@@ -21,7 +21,7 @@ namespace GroceriesApp.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<ActionResult<string>> Login(LoginDto loginDto)
         {
             var appUser = await _userService.ValidateCredentialsAsync(loginDto.Username, loginDto.Password);
 
@@ -44,10 +44,11 @@ namespace GroceriesApp.Api.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("test")]
         public async Task<IActionResult> Test()
         {
-            var user = User.FindFirst(ClaimTypes.Name)?.Value;
+            var userId = User.FindFirst(ClaimTypes.Name)?.Value;
+            var user = await _userService.GetUserByNameAsync(userId);
             return Ok(user);
         }
     }

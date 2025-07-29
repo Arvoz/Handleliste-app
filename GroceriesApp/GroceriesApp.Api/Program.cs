@@ -53,21 +53,23 @@ builder.Services.AddDbContext<GroceriesAppDb>(options =>
     options.UseSqlite("Data Source=app.db"));
 
 // Token
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication()
+    .AddJwtBearer("Bearer", options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateIssuerSigningKey = true,
-            ValidateLifetime = false,
+            ValidateLifetime = true,
             ValidIssuer = builder.Configuration["jwt:Issuer"],
             ValidAudience = builder.Configuration["jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("jwt:Key")!))
+                Encoding.UTF8.GetBytes(builder.Configuration["jwt:Key"]!))
         };
     });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
