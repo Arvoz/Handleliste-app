@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using GroceriesApp.Api.Interface;
+using GroceriesApp.Api.Service;
+using GroceriesApp.Api.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +49,9 @@ builder.Services.AddScoped<IUserInventoryRepository, UserInventoryRepository>();
 builder.Services.AddScoped<IInventoryReposotory, InventoryRepository>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICryptoService, CryptoService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
+builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
+builder.Services.AddScoped<IIngredientPriceRepository, IngredientPriceRepository>();
 
 // Shared interface
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

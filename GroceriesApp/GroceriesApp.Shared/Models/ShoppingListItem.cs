@@ -10,9 +10,9 @@ namespace GroceriesApp.Shared
     {
         public int Id { get; set; }
         public int IngredientId { get; set; }
-        public Ingredient Ingredient { get; set; } = new Ingredient();
+        public Ingredient? Ingredient { get; set; }
         public int ShoppingListId { get; set; }
-        public ShoppingList ShoppingList { get; set; } = new ShoppingList();
+        public ShoppingList? ShoppingList { get; set; } 
         public decimal Amount { get; set; }
         public bool ItemChecked { get; set; }
     }
