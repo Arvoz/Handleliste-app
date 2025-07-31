@@ -10,8 +10,8 @@ namespace GroceriesApp.Shared
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public AppUser User { get; set; } = new AppUser();
+        public AppUser User { get; set; }
         public int InventoryId { get; set; }
-        public Inventory Inventory { get; set; } = new Inventory();
+        public Inventory Inventory { get; set; }
     } 
 }

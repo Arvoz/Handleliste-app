@@ -42,11 +42,14 @@ builder.Services.AddSwaggerGen(options =>
 
 // Interfaces
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<IUserInventoryRepository, UserInventoryRepository>();
+builder.Services.AddScoped<IInventoryReposotory, InventoryRepository>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICryptoService, CryptoService>();
 
 // Shared interface
-builder.Services.AddSingleton(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 // DbContext
 builder.Services.AddDbContext<GroceriesAppDb>(options =>

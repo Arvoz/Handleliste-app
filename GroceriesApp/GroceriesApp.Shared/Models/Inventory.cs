@@ -10,8 +10,8 @@ namespace GroceriesApp.Shared
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public ICollection<UserInventory> UserInventories { get; set; } = new List<UserInventory>();
-        public ICollection<InventoryItem> InventoryItems { get; set; } = new List<InventoryItem>();
-        public ICollection<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
+        public ICollection<UserInventory> UserInventories { get; set; }
+        public ICollection<InventoryItem> InventoryItems { get; set; }
+        public ICollection<ShoppingList> ShoppingLists { get; set; }
     }
 }

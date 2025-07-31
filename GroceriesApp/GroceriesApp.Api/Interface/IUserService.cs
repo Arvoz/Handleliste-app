@@ -6,6 +6,6 @@ namespace GroceriesApp.Api
     {
         Task<AppUser?> ValidateCredentialsAsync(string username, string password);
         Task<AppUser> GetUserByNameAsync(string username);
-        Task<bool> CreateNewUser(LoginDto dto);
+        Task<bool> CreateNewUser(AuthDto dto);
     }
 }

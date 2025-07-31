@@ -9,19 +9,19 @@ namespace GroceriesApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly ITokenService _token;
 
-        public LoginController(IUserService userService, ITokenService token)
+        public AuthController(IUserService userService, ITokenService token)
         {
             _userService = userService;
             _token = token;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(LoginDto loginDto)
+        public async Task<ActionResult<string>> Login(AuthDto loginDto)
         {
             var appUser = await _userService.ValidateCredentialsAsync(loginDto.Username, loginDto.Password);
 
@@ -34,7 +34,7 @@ namespace GroceriesApp.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(LoginDto loginDto)
+        public async Task<IActionResult> Register(AuthDto loginDto)
         {
             var validate = await _userService.CreateNewUser(loginDto);
 
@@ -47,9 +47,8 @@ namespace GroceriesApp.Api.Controllers
         [HttpGet("test")]
         public async Task<IActionResult> Test()
         {
-            var userId = User.FindFirst(ClaimTypes.Name)?.Value;
-            var user = await _userService.GetUserByNameAsync(userId);
-            return Ok(user);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            return Ok(userId);
         }
     }
 }

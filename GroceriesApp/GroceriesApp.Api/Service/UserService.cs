@@ -39,7 +39,7 @@ namespace GroceriesApp.Api
             return user;
         }
 
-        public async Task<bool> CreateNewUser(LoginDto dto)
+        public async Task<bool> CreateNewUser(AuthDto dto)
         {
             var exist = await _db.Users.AnyAsync(u => u.Username == dto.Username);
             if (exist) return false;
@@ -49,7 +49,7 @@ namespace GroceriesApp.Api
             return true;
         }
 
-        private AppUser CreateUserFromDto(LoginDto dto)
+        private AppUser CreateUserFromDto(AuthDto dto)
         {
             var user = new AppUser
             {

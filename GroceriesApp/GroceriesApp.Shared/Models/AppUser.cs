@@ -16,5 +16,6 @@ namespace GroceriesApp.Shared
         public DateTime Created { get; set; }
         public ICollection<UserInventory> UserInventories { get; set; } = new List<UserInventory>();
         public ICollection<InventoryLog> InventoryLogs { get; set; } = new List<InventoryLog>();
+        public ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }
 }
