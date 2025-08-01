@@ -3,9 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using GroceriesApp.Api.Interface;
-using GroceriesApp.Api.Service;
-using GroceriesApp.Api.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

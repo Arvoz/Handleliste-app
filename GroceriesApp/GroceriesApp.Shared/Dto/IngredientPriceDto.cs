@@ -8,7 +8,7 @@ namespace GroceriesApp.Shared
 {
     public class IngredientPriceDto
     {
-        public int? IngredientId { get; set; }
+        public int? Id { get; set; }
         public PriceCurrency Currency { get; set; }
         public decimal Price { get; set; }
     }

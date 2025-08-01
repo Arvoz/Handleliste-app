@@ -1,6 +1,6 @@
 ﻿using GroceriesApp.Shared;
 
-namespace GroceriesApp.Api.Interface
+namespace GroceriesApp.Api
 {
     public interface ITokenService
     {

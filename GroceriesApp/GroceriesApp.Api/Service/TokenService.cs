@@ -1,5 +1,4 @@
-﻿using GroceriesApp.Api.Interface;
-using GroceriesApp.Shared;
+﻿using GroceriesApp.Shared;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

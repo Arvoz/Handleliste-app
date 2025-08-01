@@ -1,5 +1,6 @@
 ﻿using GroceriesApp.Api.Migrations;
 using GroceriesApp.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace GroceriesApp.Api
 {
@@ -7,7 +8,15 @@ namespace GroceriesApp.Api
     {
         public IngredientRepository(GroceriesAppDb db) : base(db)
         {
-            
+
+        }
+
+        public async Task<List<Ingredient>> GetIngredientsAsync(int userId)
+        {
+            return await _db.Ingredients
+                .Include(i => i.IngredientPrices)
+                .Where(u => u.UserId == null || u.UserId == userId)
+                .ToListAsync();
         }
     }
 }

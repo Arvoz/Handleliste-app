@@ -9,7 +9,7 @@ namespace GroceriesApp.Shared
     public class Ingredient
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public AppUser? User { get; set; }
         public string? Name { get; set; }
         public IngredientCategory Category { get; set; }

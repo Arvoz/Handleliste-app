@@ -17,12 +17,23 @@ namespace GroceriesApp.Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> AddIngrediant(IngredientEntityDto dto)
+        public async Task<IActionResult> AddIngrediant(GlobalIngredientDto dto)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            await _ingredientService.AddIngredientAsync(dto, userId);
+            var isAdmin = User.IsInRole("Admin");
+            await _ingredientService.AddIngredientAsync(dto, userId, isAdmin);
 
             return Ok();
+        }
+
+        [HttpGet("get")]
+        public async Task<IActionResult> GetIngredients()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var ingredients = await _ingredientService.GetIngredientsAsync(userId);
+
+            return Ok(ingredients);
         }
     }
 }

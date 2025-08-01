@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceriesApp.Shared", "Groc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceriesApp.Api", "GroceriesApp.Api\GroceriesApp.Api.csproj", "{D4BA4F84-E28C-4B81-91C5-413FC2FAE20A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceriesApp.Tests", "GroceriesApp.Tests\GroceriesApp.Tests.csproj", "{8347BFCB-E332-4954-A1D3-9C6D18B507D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D4BA4F84-E28C-4B81-91C5-413FC2FAE20A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BA4F84-E28C-4B81-91C5-413FC2FAE20A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BA4F84-E28C-4B81-91C5-413FC2FAE20A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8347BFCB-E332-4954-A1D3-9C6D18B507D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8347BFCB-E332-4954-A1D3-9C6D18B507D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8347BFCB-E332-4954-A1D3-9C6D18B507D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8347BFCB-E332-4954-A1D3-9C6D18B507D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

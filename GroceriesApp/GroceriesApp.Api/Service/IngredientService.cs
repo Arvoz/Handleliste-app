@@ -1,7 +1,7 @@
 ﻿using GroceriesApp.Api;
 using GroceriesApp.Shared;
 
-namespace GroceriesApp.Api.Service
+namespace GroceriesApp.Api
 {
     public class IngredientService : IIngredientService
     {
@@ -14,18 +14,31 @@ namespace GroceriesApp.Api.Service
             _ingredientPriceRepo = ingredientPriceRepo;
         }
 
-        public async Task AddIngredientAsync(IngredientEntityDto  dto, int userId)
+        public async Task AddIngredientAsync(GlobalIngredientDto dto, int userId, bool isAdmin)
         {
-            var ingredient = dto.ConvertFromIngredientDto(dto.Ingredient);
-            var ingredientPrice = dto.ConvertFromIngredientPriceDto(dto.IngredientPrice);
+            var ingredient = dto.ConvertFromIngredientDto(dto);
 
-            ingredient.UserId = userId;
-
+            ingredient.UserId = isAdmin ? null : userId;
             await _ingredientRepo.AddAsync(ingredient);
+        }
 
-            ingredientPrice.IngredientId = ingredient.Id;
+        public async Task<IngredientsDto> GetIngredientsAsync(int userId)
+        {
+            var ingredients = await _ingredientRepo.GetIngredientsAsync(userId);
 
-            await _ingredientPriceRepo.AddAsync(ingredientPrice);
+            return new IngredientsDto
+            {
+                Ingredients = ingredients.Select(i => new GlobalIngredientDto
+                {
+                    Name = i.Name,
+                    Category = i.Category,
+                    Prices = i.IngredientPrices.Select(p => new IngredientPriceDto
+                    {
+                        Price = p.Price,
+                        Currency = p.Currency
+                    }).ToList()
+                }).ToList()
+            };
         }
     }
 }

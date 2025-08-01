@@ -1,6 +1,6 @@
 ﻿using GroceriesApp.Shared;
 
-namespace GroceriesApp.Api.Repository
+namespace GroceriesApp.Api
 {
     public class IngredientPriceRepository : Repository<IngredientPrice>, IIngredientPriceRepository
     {
