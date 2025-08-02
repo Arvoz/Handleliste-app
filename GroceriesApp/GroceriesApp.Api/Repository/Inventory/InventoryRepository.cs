@@ -25,9 +25,9 @@ public class InventoryRepository : Repository<Inventory>, IInventoryReposotory
              .Include(ui => ui.Inventory)
              .FirstOrDefaultAsync(n => n.Inventory!.Name == name && n.UserId == userId);
 
-        if (existing != null) return false;
+        if (existing != null) return true;
 
-        return true;
+        return false;
     }
 
     public async Task<List<Inventory>> GetAllInventoryAsync(int userId)

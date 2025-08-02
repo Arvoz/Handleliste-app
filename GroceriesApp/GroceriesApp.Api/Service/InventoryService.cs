@@ -22,7 +22,7 @@ namespace GroceriesApp.Api
         {
             var existing = await _inventoryRepo.CheckUserInventory(userId, name);
 
-            if (!existing)
+            if (existing)
             {
                 return false;
             }
