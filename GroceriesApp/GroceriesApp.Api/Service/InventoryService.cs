@@ -56,9 +56,9 @@ namespace GroceriesApp.Api
             throw new NotImplementedException();
         }
 
-        public async Task<bool> AddIngredientToInventoryAsync(CreateInventoryItemDto dto)
+        public async Task<bool> AddIngredientToInventoryAsync(CreateInventoryItemDto dto, int userId)
         {
-            var exist = await _inventoryItemRepository.CheckIfInventoryAndIngredientIdExistAsync(dto.InventoryId, dto.IngredientId);
+            var exist = await _inventoryItemRepository.CheckIfInventoryAndIngredientExistAsync(dto.InventoryId, dto.IngredientId, userId);
 
             if (!exist)
             {
@@ -83,6 +83,39 @@ namespace GroceriesApp.Api
 
             return true;
 
+        }
+
+        public async Task<GetAllInventoriesDto> GetAllInventoriesFromUserAsync(int userId)
+        {
+            var inventories = await _inventoryRepo.GetAllInventoryAsync(userId);
+
+            if (inventories == null || inventories.Count == 0)
+            {
+                return null!;
+            }
+
+            return ConvertToGetAllInventoriesDto(inventories);
+        }
+
+        private GetAllInventoriesDto ConvertToGetAllInventoriesDto(List<Inventory> ingredients)
+        {
+            return new GetAllInventoriesDto
+            {
+                Inventories = ingredients.Select(i => new GetInventoryDto
+                {
+                    Name = i.Name,
+                    Ingrediens = i.InventoryItems?.Select(x => new GetInventoryItemDto
+                    {
+                        Id = x.Id,
+                        IngredientId = x.IngredientId,
+                        IngredientName = x.Ingredient.Name,
+                        InventoryId = x.InventoryId,
+                        InventoryName = x.Inventory.Name,
+                        Amount = x.Amount,
+                        ExpiredDate = x.ExpiredDate
+                    }).ToList()
+                }).ToList()
+            };
         }
     }
 }

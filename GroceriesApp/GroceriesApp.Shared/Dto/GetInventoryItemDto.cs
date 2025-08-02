@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace GroceriesApp.Shared
 {
-    public class InventoryItem
+    public class GetInventoryItemDto
     {
         public int Id { get; set; }
         public int IngredientId { get; set; }
-        public Ingredient? Ingredient { get; set; }
+        public string IngredientName { get; set; } = string.Empty;
         public int InventoryId { get; set; }
-        public Inventory? Inventory { get; set; }
+        public string InventoryName { get; set; } = string.Empty;
         public decimal Amount { get; set; }
-        public DateTime Created { get; set; }
         public DateTime? ExpiredDate { get; set; }
-        public ICollection<InventoryLog> InventoryLogs { get; set; } = new List<InventoryLog>();
     }
 }

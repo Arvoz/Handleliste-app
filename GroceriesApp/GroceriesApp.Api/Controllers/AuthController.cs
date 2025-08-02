@@ -41,13 +41,5 @@ namespace GroceriesApp.Api.Controllers
 
             return Ok("Sucess!");
         }
-
-        [Authorize]
-        [HttpGet("test")]
-        public async Task<IActionResult> Test()
-        {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            return Ok(userId);
-        }
     }
 }

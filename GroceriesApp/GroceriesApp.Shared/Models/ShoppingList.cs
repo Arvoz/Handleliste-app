@@ -13,6 +13,6 @@ namespace GroceriesApp.Shared
         public int InventoryId { get; set; }
         public Inventory? Inventory { get; set; } 
         public DateTime Created { get; set; }
-        public ICollection<ShoppingListItem>? ShoppingListItems { get; set; } 
+        public ICollection<ShoppingListItem> ShoppingListItems { get; set; } = new List<ShoppingListItem>();
     }
 }

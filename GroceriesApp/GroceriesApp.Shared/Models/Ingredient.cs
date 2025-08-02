@@ -15,9 +15,9 @@ namespace GroceriesApp.Shared
         public IngredientCategory Category { get; set; }
         public IngredientUnitType UnitType { get; set; }
         public decimal DefaultAmount { get; set; }
-        public ICollection<IngredientPrice>? IngredientPrices { get; set; }
-        public ICollection<InventoryItem>? InventoryItems { get; set; }
-        public ICollection<RecipeItem>? RecipeItems { get; set; }
-        public ICollection<ShoppingListItem>? ShoppingListItems { get; set; }
+        public ICollection<IngredientPrice> IngredientPrices { get; set; } = new List<IngredientPrice>();
+        public ICollection<InventoryItem> InventoryItems { get; set; } = new List<InventoryItem>();
+        public ICollection<RecipeItem> RecipeItems { get; set; } = new List<RecipeItem>();
+        public ICollection<ShoppingListItem> ShoppingListItems { get; set; } = new List<ShoppingListItem>();
     }
 }

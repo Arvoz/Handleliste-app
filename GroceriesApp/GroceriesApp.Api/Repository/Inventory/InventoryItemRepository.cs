@@ -10,23 +10,21 @@ namespace GroceriesApp.Api
             
         }
 
-        public async Task<bool> CheckIfInventoryAndIngredientIdExistAsync(int inventoryId, int ingredientId)
+        public async Task<bool> CheckIfInventoryAndIngredientExistAsync(int inventoryId, int ingredientId, int userId)
         {
-            return await CheckIfItemExistAsync(ingredientId) && await CheckIfInventoryExistAsync(inventoryId);
+            return await CheckIfItemExistAsync(ingredientId, userId) && await CheckIfInventoryExistAsync(inventoryId, userId);
         }
 
-        private async Task<bool> CheckIfInventoryExistAsync(int inventoryId)
+        private async Task<bool> CheckIfInventoryExistAsync(int inventoryId, int userId)
         {
-            var exist = await _db.Inventories.AnyAsync(i => i.Id == inventoryId);
-
-            return exist;
+            return await _db.UserInventory
+                .AnyAsync(ui => ui.UserId == userId && ui.InventoryId == inventoryId);
         }
 
-        private async Task<bool> CheckIfItemExistAsync(int itemId)
+        private async Task<bool> CheckIfItemExistAsync(int itemId, int userId)
         {
-            var exist = await _db.Ingredients.AnyAsync(i => i.Id == itemId);
-
-            return exist;
+            return await _db.Ingredients
+                .AnyAsync(i => i.Id == itemId && (i.UserId == null || i.UserId == userId));
         }
     }
 }

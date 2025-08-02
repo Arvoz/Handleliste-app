@@ -29,4 +29,13 @@ public class InventoryRepository : Repository<Inventory>, IInventoryReposotory
 
         return true;
     }
+
+    public async Task<List<Inventory>> GetAllInventoryAsync(int userId)
+    {
+        return await _db.Inventories
+            .Include(i => i.InventoryItems)
+                .ThenInclude(ii => ii.Ingredient)
+            .Where(i => i.UserInventories!.Any(ui => ui.UserId == userId))
+            .ToListAsync();
+    }
 }

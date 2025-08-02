@@ -23,7 +23,7 @@ namespace GroceriesApp.Api.Controllers
         [HttpPost("addInventory")]
         public async Task<IActionResult> AddInventory(string name)
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var userId = GetUserId();
 
             var check = await _inventory.AddInventoryAsync(name, userId);
 
@@ -39,7 +39,8 @@ namespace GroceriesApp.Api.Controllers
         [HttpPost("ingredient")]
         public async Task<IActionResult> AddIngredientToInventory(CreateInventoryItemDto dto)
         {
-            var addIngredient = await _inventory.AddIngredientToInventoryAsync(dto);
+            var userId = GetUserId();
+            var addIngredient = await _inventory.AddIngredientToInventoryAsync(dto, userId);
 
             if (!addIngredient)
             {
@@ -47,6 +48,26 @@ namespace GroceriesApp.Api.Controllers
             }
 
             return Ok("200");
+        }
+
+        [Authorize]
+        [HttpGet("Inventory")]
+        public async Task<IActionResult> GetInventory()
+        {
+            var userId = GetUserId();
+            var inventories = await _inventory.GetAllInventoriesFromUserAsync(userId);
+
+            if (inventories == null)
+            {
+                return BadRequest("User have no inventories!");
+            }
+
+            return Ok(inventories);
+        }
+
+        private int GetUserId()
+        {
+            return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         }
 
     }
