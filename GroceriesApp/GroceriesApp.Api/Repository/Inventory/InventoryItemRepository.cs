@@ -1,7 +1,7 @@
 ﻿using GroceriesApp.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace GroceriesApp.Api.Repository.Inventory
+namespace GroceriesApp.Api
 {
     public class InventoryItemRepository : Repository<InventoryItem>, IInventoryItemRepository
     {
