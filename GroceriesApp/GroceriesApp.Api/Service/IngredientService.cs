@@ -30,10 +30,12 @@ namespace GroceriesApp.Api
             {
                 Ingredients = ingredients.Select(i => new GlobalIngredientDto
                 {
+                    Id = i.Id,
                     Name = i.Name,
                     Category = i.Category,
                     Prices = i.IngredientPrices.Select(p => new IngredientPriceDto
                     {
+                        Id = p.Id,
                         Price = p.Price,
                         Currency = p.Currency
                     }).ToList()

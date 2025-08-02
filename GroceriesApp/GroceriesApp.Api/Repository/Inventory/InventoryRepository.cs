@@ -19,11 +19,11 @@ public class InventoryRepository : Repository<Inventory>, IInventoryReposotory
     }
 
 
-    public async Task<bool> CheckUserInventory(AppUser user, string name)
+    public async Task<bool> CheckUserInventory(int userId, string name)
     {
         var existing = await _db.UserInventory
              .Include(ui => ui.Inventory)
-             .FirstOrDefaultAsync(n => n.Inventory.Name == name && n.UserId == user.Id);
+             .FirstOrDefaultAsync(n => n.Inventory!.Name == name && n.UserId == userId);
 
         if (existing != null) return false;
 

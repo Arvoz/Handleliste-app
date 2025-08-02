@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using GroceriesApp.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -23,9 +24,8 @@ namespace GroceriesApp.Api.Controllers
         public async Task<IActionResult> AddInventory(string name)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var user = await _userService.GetByIdAsync(userId);
 
-            var check = await _inventory.AddInventoryAsync(name, user);
+            var check = await _inventory.AddInventoryAsync(name, userId);
 
             if (!check)
             {
@@ -34,5 +34,20 @@ namespace GroceriesApp.Api.Controllers
 
             return Ok($"{userId} has added {name} to it's inventory!");
         }
+
+        [Authorize]
+        [HttpPost("ingredient")]
+        public async Task<IActionResult> AddIngredientToInventory(CreateInventoryItemDto dto)
+        {
+            var addIngredient = await _inventory.AddIngredientToInventoryAsync(dto);
+
+            if (!addIngredient)
+            {
+                return BadRequest($"Could not found {dto.IngredientId} or {dto.InventoryId}");
+            }
+
+            return Ok("200");
+        }
+
     }
 }
